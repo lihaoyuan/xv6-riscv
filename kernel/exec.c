@@ -38,6 +38,11 @@ exec(char *path, char **argv)
   if((pagetable = proc_pagetable(p)) == 0)
     goto bad;
 
+  // lhy note: start loading program from 0x0, 
+  // so sz means the loaded memory size,
+  // and also the max loaded memory address,
+  // therefore sz can be used as sp blow
+  
   // Load program into memory.
   sz = 0;
   for(i=0, off=elf.phoff; i<elf.phnum; i++, off+=sizeof(ph)){
@@ -68,6 +73,8 @@ exec(char *path, char **argv)
   sz = PGROUNDUP(sz);
   if((sz = uvmalloc(pagetable, sz, sz + 2*PGSIZE)) == 0)
     goto bad;
+  // lhy note: clear the first page just alloced,
+  // make it a guard page of stack
   uvmclear(pagetable, sz-2*PGSIZE);
   sp = sz;
   stackbase = sp - PGSIZE;

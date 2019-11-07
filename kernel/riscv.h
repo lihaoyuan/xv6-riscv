@@ -352,4 +352,8 @@ sfence_vma()
 #define MAXVA (1L << (9 + 9 + 9 + 12 - 1))
 
 typedef uint64 pte_t;
+
+// lhy note: a pagetable_t may points to 
+// either the kernel page table,
+// or one of the per-process page tables
 typedef uint64 *pagetable_t; // 512 PTEs

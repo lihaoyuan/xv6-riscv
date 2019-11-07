@@ -143,6 +143,8 @@ kvmpa(uint64 va)
   return pa+off;
 }
 
+// lhy note: installs PTEs for new mappings for each page
+
 // Create PTEs for virtual addresses starting at va that refer to
 // physical addresses starting at pa. va and size might not
 // be page-aligned. Returns 0 on success, -1 if walk() couldn't

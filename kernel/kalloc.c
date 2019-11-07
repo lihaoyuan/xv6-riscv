@@ -14,6 +14,14 @@ void freerange(void *pa_start, void *pa_end);
 extern char end[]; // first address after kernel.
                    // defined by kernel.ld.
 
+// lhy note: if a chunk of memory is in freelist,
+// its memory is already freed, so xv6 can simply 
+// use some of the memory as the next pointer to
+// the next chunk of list.
+// 
+// When a chunk is gonner be returned by kalloc,
+// it would be re-filled with junk, 
+// so the next pointer would be overwritten too
 struct run {
   struct run *next;
 };
@@ -30,6 +38,8 @@ kinit()
   freerange(end, (void*)PHYSTOP);
 }
 
+// lhy note: free all available physics memory
+// to init free list
 void
 freerange(void *pa_start, void *pa_end)
 {
