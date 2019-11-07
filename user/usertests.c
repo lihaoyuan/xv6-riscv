@@ -2119,8 +2119,8 @@ main(int argc, char *argv[])
   if(argc > 1) {
     n = argv[1];
   }
-  
-  struct test {
+
+  static const struct test {
     void (*f)(char *);
     char *s;
   } tests[] = {
@@ -2183,9 +2183,15 @@ main(int argc, char *argv[])
   close(open("usertests.ran", O_CREATE));
 
   int fail = 0;
-  for (struct test *t = tests; t->s != 0; t++) {
-    if((n == 0) || strcmp(t->s, n) == 0) {
-      if(!run(t->f, t->s))
+  // for (struct test *t = tests; t->s != 0; t++) {
+  //   if((n == 0) || strcmp(t->s, n) == 0) {
+  //     if(!run(t->f, t->s))
+  //       fail = 1;
+  //   }
+  // }
+  for (int i = 0; (tests+i)->s != 0; i++) {
+    if((n == 0) || strcmp((tests+i)->s, n) == 0) {
+      if(!run((tests+i)->f, (tests+i)->s))
         fail = 1;
     }
   }

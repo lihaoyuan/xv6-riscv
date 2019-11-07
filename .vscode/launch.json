@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // should launch after "make qemu-gdb" or running the task
+            "name": "Remote Debug Xv6",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerServerAddress": ":25501", // replace it with your port
+            "program": "${workspaceRoot}/kernel/kernel",
+            "cwd":".",
+            "MIMode": "gdb",
+            "externalConsole": true,
+            "serverLaunchTimeout": 3000,
+            "stopAtEntry": true,
+            "logging": {
+                "engineLogging": true
+            },
+        }
+    ]
+}
